@@ -1,0 +1,58 @@
+ME to BUILDER:
+Complete Step 7: Sustainable ML Approach.
+
+Implement a periodic retraining approach.
+
+Compare:
+1. A model that is trained on older data and
+   never updated.
+2. A model that is retrained using newer
+   available training data.
+
+Evaluate both approaches on the same
+unseen testing data.
+
+Compare accuracy, precision, recall, and
+F1-score.
+
+Explain which approach performs better and
+why retraining can help address data drift.
+
+Save the results and conclusions in
+docs/step7_sustainable_approach.md.
+
+BUILDER:
+I’ll implement a temporal comparison: keep the baseline fixed through 2018, 
+and for the retrained strategy add each completed year’s data before predicting 
+the next year. Both strategies will be scored on the same held-out year each time, 
+with each test year excluded from its fit.
+
+Step 7 is complete. src/sustainable.py compares a fixed 2014–2018 baseline with 
+annual retraining that adds only previously available labels. The results and 
+conclusions are in docs/step7_sustainable_approach.md.
+
+The strategies match in 2019; retraining substantially improves accuracy and F1 
+in 2020 and 2021. The report notes that this is consistent with drift being 
+relevant, but does not prove causation. I ran the requested comparison, not a 
+test suite. Committed as 96d81d2.
+
+ME to TESTER:
+Now that the builder has done step seven can you test their code
+
+TESTER:
+Step 7 tests passed: 2 passed in 3.71s. They verify the expanding retraining 
+windows, held-out-year separation, matching baseline/retraining results for 2019, 
+and valid metrics for both classifiers.
+
+The tests and run history are in test_step7_tester.py and step7_test_log.md. The 
+initial failures were test assertion issues, documented in the log; no 
+implementation defect remained.
+
+ME to REVIEWER:
+Can you now review the code the builder made for step seven
+
+REVIEWER:
+I reviewed Step 7 by inspecting the code and artifacts only; I did not run tests 
+or the comparison command. The review is saved at reviews/step7_review.md. It 
+found no training-window or data-leakage defect and flags the placeholder 
+tester-transcript path.

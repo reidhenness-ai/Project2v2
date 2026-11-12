@@ -1,0 +1,55 @@
+ME to BUILDER:
+Complete Step 6: Test Data Prediction.
+
+Use both trained classifiers to predict the
+testing data.
+
+Break down accuracy, precision, recall, and
+F1-score by year.
+
+Compare how model performance changes over
+time and explain whether data drift appears
+to affect classification performance.
+
+Save the results in
+docs/step6_test_results.md.
+
+Do not move to Step 7 yet.
+
+BUILDER:
+I’ll use the final 2014–2018 models to predict the held-out 2019–2021 data and 
+report per-year metrics. I’ll compare those results with the existing drift 
+analysis, keeping the interpretation descriptive rather than claiming causation.
+
+The per-year prediction run completed for both final models, with class counts 
+and metrics captured. I’m documenting those results and comparing their temporal 
+trends with the KS drift findings, without interpreting the association as causal.
+
+Step 6 is complete. Both final models predicted the 2019–2021 test data; 
+docs/step6_test_results.md reports per-year metrics and prediction counts, 
+with malware (1) as the positive class.
+
+Random Forest accuracy declines from 0.5703 in 2019 to 0.5177 in 2021, alongside 
+increasing overall drift. Logistic Regression dips in 2020 and rebounds in 2021, 
+so the results suggest a possible relationship with drift but do not establish 
+causation. No tests were run. Committed as d8bfbe3; Step 7 was not started.
+
+ME to TESTER:
+Now that the builder has done step six can you test their code
+
+TESTER:
+Step 6 tests passed: 6 passed in 2.03s. They cover per-year and pooled metrics, 
+prediction counts, the final 2014–2018 training split, and an end-to-end run with 
+both classifiers on controlled CSV data.
+
+Tests are in test_step6_tester.py; results are recorded in step6_test_log.md. 
+No implementation code was changed.
+
+ME to REVIEWER:
+Can you now review the code the builder made for step six
+
+REVIEWER:
+I reviewed Step 6 by inspecting the code and artifacts only; I did not run tests 
+or execute the prediction command. The review is saved at reviews/step6_review.md. 
+It found no prediction or data-leakage defect, but flags the tester-transcript 
+placeholder.

@@ -1,0 +1,58 @@
+ME to BUILDER AGENT: Complete Step 2: Handle Data Drift.
+
+Analyze how the Android malware dataset changes
+across the available years.
+
+Use the Kolmogorov-Smirnov test to compare
+feature distributions between years.
+
+Identify the features with the most significant
+drift and the years that differ the most.
+
+Create the analysis code and save the results
+in docs/step2_drift_analysis.md.
+
+Make sure the analysis is reproducible.
+Do not move to Step 3 yet.
+
+BUILDER: The analysis implementation and synthetic tests are in place, 
+including the three scopes and per-comparison FDR correction. I’m now 
+running it against the complete dataset to generate the report’s measured 
+rankings and significance counts.
+
+ME to REVIEW AGENT:
+Can you now review the code the builder made for step two
+
+REVIEWER:
+I reviewed Step 2 and saved the report at reviews/step2_review.md.
+
+The review found that the saved analysis report is stale relative to 
+the current code. The focused Step 2 tests passed: 7 passed.
+
+ME to BUILDER:
+can you read the reviews/step2_review.md file and make changes accordingly
+
+BUILDER: Addressed the Step 2 review finding: regenerated the drift report so 
+the year rankings use mean KS and underflowed p-values display as <1e-300. Added 
+a test to catch mismatches in that report logic and recorded the accepted decision 
+in the review.
+
+All 8 Step 2 tests passed. The report identifies 2021 as the largest overall 
+drift from 2014, 2020 for goodware, and 2021 for malware. Committed as 64305b7. 
+Step 3 was not started.
+
+ME to TESTER: 
+Now that the builder has done step two can you test their code
+
+TESTER:
+I’ve added independent tests for the public drift-analysis API: KS outputs, 
+class-stratified comparisons, BH correction, validation, input preservation, 
+and report writing. I’ll run all Step 2 tests through the project harness.
+
+Step 2 tests passed: 26 passed in 1.50s, including the existing tests and my 
+independent tests.
+
+I added tests for KS results, class-stratified drift, BH correction, validation, 
+input preservation, and report generation in test_step2_tester.py. The harness 
+output and test descriptions are recorded in step2_test_log.md. I did not modify 
+the implementation.

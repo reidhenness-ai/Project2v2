@@ -1,0 +1,106 @@
+ME to BUILDER:
+Complete Step 5: Evaluate Classifier Performance.
+
+Evaluate Random Forest and Logistic Regression
+using the testing dataset.
+
+Calculate:
+- Accuracy
+- Precision
+- Recall
+- F1-score
+
+Use the appropriate binary classification
+metrics and clearly identify which class is
+being treated as the positive class.
+
+Create a comparison table and save it in
+docs/step5_evaluation.md.
+
+Do not move to Step 6 yet.
+
+BUILDER:
+The pooled test-set evaluation completed successfully and the report now records 
+all four metrics with malware explicitly marked positive. I’m committing only the 
+Step 5 evaluator and report.
+
+Step 5 is complete. src/evaluation.py evaluates both classifiers on the pooled 
+2019–2021 test set, with malware (1) explicitly treated as positive. Results are 
+in docs/step5_evaluation.md.
+
+Logistic Regression scored 0.5806 accuracy and Random Forest 0.5726. As requested, 
+I did not run tests or begin Step 6. Committed as 8d18adb.
+
+ME to TESTER:
+Now that the builder has done step five can you test their code
+
+TESTER:
+Step 5 testing found one implementation gap: pooled metrics and validation 
+checks passed, but evaluate_test_set returns only pooled results. The plan 
+alls for results per test year and pooled, so the per-year metrics test fails. 
+The builder should address this.
+
+The corrected test run had 1 failed, 8 passed. I documented the finding and the 
+corrected test setup in step5_test_log.md; tests are in test_step5_tester.py. I 
+did not modify implementation code.
+
+ME to BUILDER:
+Can you read the test log and make fixes to to code
+
+BUILDER:
+Accepted the per-year metrics finding. src/evaluation.py now returns per-year 
+and pooled results for both classifiers, and docs/step5_evaluation.md includes 
+the updated table.
+
+The corrected chronology case already passed in the log; I made no code change 
+for it and did not rerun tests. Note: the pooled-metrics test currently assumes 
+only two result rows, which conflicts with the required eight per-year-plus-pooled 
+rows. The tester should update it to select pooled rows. Committed as efa623a.
+
+ME to TESTER: 
+Code has been fixed, rerun the tests
+
+TESTER:
+Step 5 rerun passed: 9 tests passed in 1.83s, including the per-year and pooled 
+metrics checks. The harness appended Run 4 to the Step 5 test log. The earlier 
+failure was due to the test not selecting the pooled row after per-year rows were 
+added; I corrected the test, not the implementation.
+
+ME to REVIEWER:
+Can you now review the code the builder made for step five
+
+REVIEWER:
+I reviewed Step 5 by inspecting the code only; I did not run tests or the 
+evaluation command. The review is saved at reviews/step5_review.md. It flags 
+that the evaluated models use 2014–2017 rather than the plan’s final-fit years, 
+2014–2018.
+
+ME to BUILDER:
+Can you read the review file and make any necessary changes
+
+BUILDER:
+The review’s concern is valid: the plan calls for a final refit on 2014–2018 
+once model choices are fixed. I’ll add a separate final-fit data path that 
+fits a new scaler on those years, keeps 2019–2021 held out, and update the 
+evaluation report accordingly.
+
+The final refit is implemented: the evaluation path now learns scaler parameters 
+and fits classifiers on 2014–2018, then scores the untouched 2019–2021 set. I 
+updated the report with the rerun metrics and recorded the accepted review 
+decision; I’m committing these changes without rerunning tests.
+
+Accepted the review finding. The final evaluation path now refits the scaler and 
+both classifiers on 2014–2018, then evaluates the untouched 2019–2021 test set. 
+I reran the evaluation and updated the pooled and per-year metrics in 
+docs/step5_evaluation.md. The decision is recorded in reviews/step5_review.md.
+
+I left tests for the tester to rerun. Committed as 07c0b66.
+
+ME to TESTER:
+The builder had to make some code changes because of feed back from the reviewer, 
+can you make sure it still passes the tests. 
+
+TESTER:
+The tests pass after the builder’s changes: 94 passed in the full suite, 
+and 9 passed in the focused Step 5 run. The focused run is recorded as Run 5 
+in step5_test_log.md.

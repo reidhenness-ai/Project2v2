@@ -1,0 +1,64 @@
+ME to BUILDER:
+Complete Step 4: Apply Machine Learning
+Classifiers.
+
+Implement two classifiers using scikit-learn:
+1. Random Forest
+2. Logistic Regression
+
+Train both models using the training data
+created in Step 3.
+
+Choose reasonable hyperparameters and explain
+why you selected these classifiers.
+
+Save the results and model information in
+docs/step4_models.md.
+
+Do not move to Step 5 yet.
+
+BUILDER:
+I’ll implement the classifier training entry point and run it on the Step 3 
+training split, then document the chosen models, parameters, and training 
+outcome. I’ll leave review and test work to the designated reviewer/tester.
+
+Both models trained successfully on the 2014–2017 training split. The installed 
+scikit-learn emitted a deprecation warning for explicitly setting Logistic 
+Regression’s default L2 penalty, so I’m removing that redundant argument and will 
+rerun the requested training command.
+
+Step 4 is complete. src/models.py trains Logistic Regression and Random Forest 
+using Step 3’s 72,000-row 2014–2017 training split. Both models fitted 
+successfully; parameters and run results are in docs/step4_models.md.
+
+As requested, I did not run tests or perform a separate review. Committed as 
+47fdf33. Step 5 was not started.
+
+ME to REVIEWER:
+Can you now review the code the builder made for step four
+
+REVIEWER:
+I reviewed Step 4 by inspecting the code only; I did not run tests or the 
+training command. The review is saved at reviews/step4_review.md. It flags 
+the missing Step 4 tester artifacts.
+
+ME to TESTER:
+Now that the builder has done step four can you test their code
+
+TESTER:
+Step 4 tests passed: 9 passed in 2.71s. They cover both classifiers, 
+reproducibility, training metadata, holdout isolation, and invalid inputs.
+
+The first two runs exposed overly strict exact-equality checks on 
+probabilities that differed only by floating-point rounding; I corrected 
+the tests to use a tolerance and documented both attempts in step4_test_log.md. 
+The tests are in test_step4_tester.py. No implementation code was changed.
+
+ME to TESTER:
+Would the builder need to fix any code?
+
+TESTER:
+No builder code fix is indicated by the Step 4 tests. The initial failures 
+came from exact comparisons of floating-point probabilities; after switching 
+to tolerance-based comparisons, all 9 tests passed. See the Step 4 test log.
+

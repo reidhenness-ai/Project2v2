@@ -1,0 +1,24 @@
+ME: I am starting IT 348/448 Project 2. First, read the project assignment and 
+inspect the provided project files and input_data folder. Before writing any Python 
+code, help me set up the project. Create a Git repository if one does not already 
+exist, create an AGENTS.md file describing the project, dataset, folder structure, 
+label encoding, and coding conventions, and create a PLAN.md covering all seven 
+project steps.Do not start implementing the machine learning code yet. Focus only 
+on project setup and planning.
+
+Agent1: Setup is complete. The assignment repository already exists at 
+project2-harness2; the workspace root is a separate Git repository, 
+so I did not initialize or commit anything. I updated AGENTS.md with the 
+project context, folder layout, filename-based labels, coding conventions, 
+and run commands. I replaced the placeholder in PLAN.md with a plan for all 
+seven steps, including a chronological split and leakage controls.
+The input inspection found 16 CSVs with 1,849 columns each. The 2014–2018 
+files have 9,000 data rows apiece; the 2019–2021 files have 1,500, which 
+differs from the assignment’s uniform row-count description. The plan calls 
+for validating and reporting that discrepancy.Documentation checks passed, 
+including git diff --check. No Python implementation was written. I left the 
+pre-existing deleted input_data/README.md and the untracked 
+transcripts/SetupTranscript.txt untouched.
+
+
+
